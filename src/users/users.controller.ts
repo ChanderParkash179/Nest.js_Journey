@@ -1,6 +1,7 @@
-import { Controller, Get, Header, HttpCode, HttpStatus, Post, Redirect, Req, Res } from "@nestjs/common";
+import { Controller, Get, Header, Headers, HttpCode, HttpStatus, Param, Post, Query, Redirect, Req, Res } from "@nestjs/common";
 import { of } from "rxjs";
 import { Request, Response } from "express";
+import { User } from "src/models/user.model";
 
 @Controller("/users") // controller decorator to declare a class as controller
 export class UsersController {
@@ -76,4 +77,34 @@ export class UsersController {
     return { response: "I am comming from Dynamic redirect One! Request" };
   }
   // you can use patch, put, delete also along with your logic
+
+  // route parameters
+  // particular route
+  @Get("/:id")
+  routeParameterSingle(@Param("id") id: number) {
+    return { id };
+  }
+
+  // object base route
+  @Get("/:id/:name")
+  routeParameterObject(@Param() params: User) {
+    return { params };
+  }
+
+  // query parameters
+  @Get()
+  queryParam(@Query() query: Record<string, any>) {
+    return { query_params: query };
+  }
+
+  /*
+  @Header: Set Response Header
+  @Headers: Extract Request Headers
+  */
+
+  @Post("/header/fetch")
+  extractHeader(@Headers() head: Record<string, any>) {
+    console.log(head);
+    return { head };
+  }
 }
