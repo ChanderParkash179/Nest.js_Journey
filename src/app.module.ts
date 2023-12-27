@@ -7,6 +7,6 @@ import { CarController } from './controllers/car.controller';
 
 @Module({
   controllers: [UsersController, AlbumController, TutorialController, CarController],
-  providers: [CarService] // injecting service for dependency injection
+  providers: [{ provide: "TOKEN_SERVICE", useValue: "TOKEN_SERVICE_VALUE" }, CarService] // injecting service for dependency injection
 })
 export class AppModule { }
